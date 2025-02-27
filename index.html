@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADAMDEPLOYER - Deploying Now</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+        }
+        h1 {
+            color: red;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        #status {
+            font-size: 18px;
+            margin-top: 20px;
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚨 ADAMDEPLOYER 🚨</h1>
+    <p>Enter your location to deploy ADAM units:</p>
+    
+    <input type="text" id="locationInput" placeholder="Enter a location">
+    <button onclick="deployADAM()">Deploy Now</button>
+
+    <p id="status"></p>
+
+    <script>
+        function deployADAM() {
+            var location = document.getElementById("locationInput").value;
+            if (location.trim() === "") {
+                alert("Please enter a valid location!");
+                return;
+            }
+
+            var statusText = document.getElementById("status");
+            statusText.innerHTML = "Deploying ADAM units to " + location + "...";
+
+            setTimeout(() => {
+                statusText.innerHTML = "🚀 ADAM units successfully deployed to " + location + "!";
+            }, 3000); // 3-second delay for effect
+        }
+    </script>
+</body>
+</html>
