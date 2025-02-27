@@ -10,45 +10,80 @@
             text-align: center;
             background-color: black;
             color: white;
+            padding: 20px;
         }
         h1 {
             color: red;
+            text-transform: uppercase;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: #222;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
         }
         input, button {
+            width: 100%;
             padding: 10px;
-            font-size: 16px;
             margin-top: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        input {
+            background: #333;
+            color: white;
+        }
+        button {
+            background: red;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkred;
         }
         #status {
             font-size: 18px;
             margin-top: 20px;
             color: yellow;
+            min-height: 30px;
         }
     </style>
 </head>
 <body>
     <h1>🚨 ADAMDEPLOYER 🚨</h1>
-    <p>Enter your location to deploy ADAM units:</p>
-    
-    <input type="text" id="locationInput" placeholder="Enter a location">
-    <button onclick="deployADAM()">Deploy Now</button>
-
-    <p id="status"></p>
+    <div class="container">
+        <p>Enter a **real** address to deploy ADAM units:</p>
+        <input type="text" id="locationInput" placeholder="Enter a valid address">
+        <button onclick="deployADAM()">Deploy Now</button>
+        <p id="status"></p>
+    </div>
 
     <script>
+        function isValidAddress(address) {
+            return address.length > 5 && address.includes(" ");
+        }
+
         function deployADAM() {
             var location = document.getElementById("locationInput").value;
-            if (location.trim() === "") {
-                alert("Please enter a valid location!");
+            var statusText = document.getElementById("status");
+
+            if (!isValidAddress(location)) {
+                statusText.innerHTML = "❌ Please enter a valid real-world address!";
+                statusText.style.color = "red";
                 return;
             }
 
-            var statusText = document.getElementById("status");
+            statusText.style.color = "yellow";
             statusText.innerHTML = "Deploying ADAM units to " + location + "...";
 
             setTimeout(() => {
-                statusText.innerHTML = "🚀 ADAM units successfully deployed to " + location + "!";
-            }, 3000); // 3-second delay for effect
+                statusText.style.color = "lightgreen";
+                statusText.innerHTML = "✅ ADAM units successfully deployed to " + location + "!";
+            }, 3000);
         }
     </script>
 </body>
