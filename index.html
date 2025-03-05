@@ -4,9 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>WSP ChatBot</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
 		<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 		<style>
 			#response {
@@ -33,11 +31,7 @@
 		<div class="container">
 			<h2>Free ChatBot</h2>
 			<div class="form-group">
-				<input
-					type="text"
-					class="form-control"
-					id="userInput"
-					placeholder="Enter your question" />
+				<input type="text" class="form-control" id="userInput" placeholder="Enter your question" />
 			</div>
 			<button class="btn btn-success" onclick="sendMessage()">Ask!</button>
 			<div id="response"></div>
@@ -46,33 +40,33 @@
 			async function sendMessage() {
 				const input = document.getElementById('userInput').value;
 				const responseDiv = document.getElementById('response');
+				
 				if (!input) {
 					responseDiv.innerHTML = 'Please enter a message.';
 					return;
 				}
+				
 				responseDiv.innerHTML = 'Loading...';
+				
 				try {
-					const response = await fetch(
-						'https://openrouter.ai/api/v1/chat/completions',
-						{
-							method: 'POST',
-							headers: {
-								Authorization: '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',
-								'HTTP-Referer': 'https://iliketocode-dev.github.io/School-Ai/',
-								'X-Title': 'School-Ai',
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify({
-								model: 'deepseek/deepseek-r1:free',
-								messages: [{ role: 'user', content: input }],
-							}),
+					const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+						method: 'POST',
+						headers: {
+							Authorization: 'Bearer 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',
+							'HTTP-Referer': 'https://iliketocode-dev.github.io/School-Ai/',
+							'X-Title': 'School-Ai',
+							'Content-Type': 'application/json',
 						},
-					);
+						body: JSON.stringify({
+							model: 'deepseek/deepseek-r1:free',
+							messages: [{ role: 'user', content: input }],
+						}),
+					});
+					
 					const data = await response.json();
-					console.log(data);
-					const markdownText =
-						data.choices?.[0]?.message?.content || 'No response received.';
+					const markdownText = data.choices?.[0]?.message?.content || 'No response received.';
 					responseDiv.innerHTML = marked.parse(markdownText);
+					
 				} catch (error) {
 					responseDiv.innerHTML = 'Error: ' + error.message;
 				}
